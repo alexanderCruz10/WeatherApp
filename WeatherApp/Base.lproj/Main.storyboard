@@ -68,7 +68,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="tb6-gY-yad">
                             <connections>
-                                <action selector="addLocationDidTapped:" destination="BYZ-38-t0r" id="mWg-Lu-EWo"/>
+                                <action selector="addCityDidTapped:" destination="BYZ-38-t0r" id="zyJ-Er-Kil"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -76,23 +76,97 @@
                         <outlet property="conditionImageView" destination="RvC-bz-XSE" id="XvG-pR-nhk"/>
                         <outlet property="conditionLabel" destination="agp-6W-Dcf" id="ehf-jW-YAE"/>
                         <outlet property="temperatureLabel" destination="lRo-t4-2c6" id="6rf-dI-eSX"/>
-                        <segue destination="8Hj-Si-b8s" kind="presentation" id="zOp-8l-WdM"/>
+                        <segue destination="8Hj-Si-b8s" kind="presentation" identifier="showAddCity" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="zOp-8l-WdM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="928.98550724637687" y="81.696428571428569"/>
         </scene>
-        <!--View Controller-->
+        <!--Add City View Controller-->
         <scene sceneID="60s-Ih-WIf">
             <objects>
-                <viewController id="8Hj-Si-b8s" sceneMemberID="viewController">
+                <viewController id="8Hj-Si-b8s" customClass="AddCityViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="T1W-f2-M7e">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhP-WG-t3I" userLabel="Container View">
+                                <rect key="frame" x="67" y="192" width="280" height="243"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="kji-Kz-y0J">
+                                        <rect key="frame" x="24" y="24" width="232" height="195"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wHK-wN-P3Q">
+                                                <rect key="frame" x="0.0" y="0.0" width="232" height="25"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nUm-DE-BnL">
+                                                <rect key="frame" x="0.0" y="37" width="232" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="4An-Yb-AMD"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LuB-WW-rP7">
+                                                <rect key="frame" x="0.0" y="89" width="232" height="40"/>
+                                                <color key="backgroundColor" red="0.1313208059" green="0.76939731840000003" blue="0.03206568789" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="a7L-ej-EPe"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Search">
+                                                    <fontDescription key="titleFontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="searchButtonDidTapped:" destination="8Hj-Si-b8s" eventType="touchUpInside" id="b5h-wA-xDv"/>
+                                                </connections>
+                                            </button>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="oYQ-VO-7TW">
+                                                <rect key="frame" x="0.0" y="141" width="232" height="20"/>
+                                            </activityIndicatorView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfs-EX-tbl">
+                                                <rect key="frame" x="0.0" y="173" width="232" height="22"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="kji-Kz-y0J" secondAttribute="bottom" constant="24" id="40h-CT-JN2"/>
+                                    <constraint firstAttribute="trailing" secondItem="kji-Kz-y0J" secondAttribute="trailing" constant="24" id="KzL-vo-Pid"/>
+                                    <constraint firstItem="kji-Kz-y0J" firstAttribute="leading" secondItem="rhP-WG-t3I" secondAttribute="leading" constant="24" id="P4U-AL-FmE"/>
+                                    <constraint firstItem="kji-Kz-y0J" firstAttribute="top" secondItem="rhP-WG-t3I" secondAttribute="top" constant="24" id="Re8-V2-i5d"/>
+                                    <constraint firstAttribute="width" constant="280" id="XKx-eM-xPG"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="cKB-Ab-LLa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rhP-WG-t3I" firstAttribute="centerY" secondItem="T1W-f2-M7e" secondAttribute="centerY" multiplier="0.7" id="Fqp-7o-0SP"/>
+                            <constraint firstItem="rhP-WG-t3I" firstAttribute="centerX" secondItem="T1W-f2-M7e" secondAttribute="centerX" id="Zat-Um-2UD"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="oYQ-VO-7TW" id="qqJ-pd-mmN"/>
+                        <outlet property="cityTextField" destination="nUm-DE-BnL" id="KWF-Qj-pFl"/>
+                        <outlet property="searchButton" destination="LuB-WW-rP7" id="7y1-sO-tPT"/>
+                        <outlet property="statusLabel" destination="tfs-EX-tbl" id="D5m-rn-mQC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="87Y-Uk-XvR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -120,6 +194,9 @@
     <resources>
         <image name="imClouds" width="512" height="512"/>
         <image name="location" catalog="system" width="128" height="118"/>
+        <systemColor name="secondarySystemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

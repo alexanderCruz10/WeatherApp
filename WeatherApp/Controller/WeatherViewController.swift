@@ -8,6 +8,9 @@
 import UIKit
 import SkeletonView
 
+protocol WeatherViewControllerDelegate: class {
+    func didUpdateWeatherFromSearch(model: WeatherModel)
+}
 class WeatherViewController: UIViewController {
 
     
@@ -16,12 +19,12 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var conditionLabel: UILabel!
     
     private let weatherManager = WeatherManager()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         showAnimation()
-        fetchWeather(byCity: "toronto")
+        fetchWeather(byCity: "los angeles")
     }
     
     private func fetchWeather(byCity city: String) {
@@ -29,19 +32,20 @@ class WeatherViewController: UIViewController {
         weatherManager.fetchWeather(byCity: city) { [weak self] (result) in
             guard let this = self else { return }
             switch result {
-            case .success(let weatherData):
-                this.updateView(with: weatherData)
+            case .success(let model):
+                this.updateView(with: model)
             case .failure(let error):
                 print("Error here: \(error.localizedDescription)")
             }
         }
     }
     
-    private func updateView(with data: WeatherData) {
+    private func updateView(with model: WeatherModel) {
         hideAnimation()
-        temperatureLabel.text = data.main.temp.toString().appending("°C")
-        conditionLabel.text = data.weather.first?.description
-        navigationItem.title = data.name
+        temperatureLabel.text = model.temp.toString().appending("°C")
+        conditionLabel.text = model.conditionDescription
+        navigationItem.title = model.countryName
+        conditionImageView.image = UIImage(named: model.conditionImage)
     }
     
     private func showAnimation(){
@@ -55,13 +59,31 @@ class WeatherViewController: UIViewController {
         temperatureLabel.hideSkeleton()
         conditionLabel.hideSkeleton()
     }
-    @IBAction func addLocationDidTapped(_ sender: Any) {
-        
+    @IBAction func addCityDidTapped(_ sender: Any) {
+        performSegue(withIdentifier: "showAddCity", sender: nil)
     }
     
     @IBAction func locationDidTapped(_ sender: Any) {
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showAddCity" {
+            if let destination = segue.destination as? AddCityViewController {
+                destination.delegate = self
+            }
+        }
+    }
 
+}
+
+extension WeatherViewController: WeatherViewControllerDelegate {
+    
+    func didUpdateWeatherFromSearch(model: WeatherModel) {
+    presentedViewController?.dismiss(animated: true, completion: { [weak self] in
+    guard let this = self else { return }
+      this.updateView(with: model)
+      })
+    }
 }
 
